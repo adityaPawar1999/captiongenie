@@ -46,7 +46,7 @@ const LoginPage = () => {
     
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="flex items-center justify-center h-screen bg-gray-100 text-[var(--text-color-1)]">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
         <h2 className="text-2xl font-bold mb-4 text-center text-[var(--text-color-1)] ">Login</h2>
         {error && <p className="text-red-500 text-center">{error}</p>}

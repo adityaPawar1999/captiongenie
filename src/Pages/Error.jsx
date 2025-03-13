@@ -1,7 +1,7 @@
 const Error =()=>{
     return(
         <>
-        error page
+        error page 404W
         </>
     )
 }

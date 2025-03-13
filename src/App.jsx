@@ -51,7 +51,7 @@ const App = () => {
       <div className="bg-white dark:bg-black dark:text-white min-h-screen">
         <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
         <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<AddPost />} />
         <Route path="/aboutUs" element={<AboutPage />} />
         <Route path="/addpost" element={user ? <AddPost /> : <Navigate to="/login" />} />  {/* ✅ Fixed */}
         <Route path="/signin" element={user ? <Navigate to="/profile" /> : <SigninPage />} />
