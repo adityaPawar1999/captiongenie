@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "../../redux/authSlice";
+import { login } from "../../Redux/authSlice";
 
 import { useNavigate } from "react-router-dom";
 import { setAuthToken } from "../../Redux/authService";
