@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 
-import { signup } from "../../redux/authSlice";
+import { signup } from "../../Redux/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const SigninPage = () => {
