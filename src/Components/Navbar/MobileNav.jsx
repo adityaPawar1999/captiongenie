@@ -6,27 +6,25 @@ import AuthNavLinks from "./AuthNavLinks";
 const MobileNav = ({ darkMode, setDarkMode, user, handleLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-
   return (
     <>
       {/* Mobile Menu Button */}
-      <div className="md:hidden flex items-center text-[var(--text-color-3)]">
-        <button onClick={() => setDarkMode(!darkMode)} className="text-black dark:text-white mr-4">
+      <div className="md:hidden flex items-center">
+        <button onClick={() => setDarkMode(!darkMode)} className="text-white mr-4">
           {darkMode ? <Sun size={24} /> : <Moon size={24} />}
         </button>
-        <button onClick={toggleMenu} className="text-black dark:text-white">
+        <button onClick={() => setIsOpen(!isOpen)} className="text-white">
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* Mobile Navigation Links */}
-      <ul className={`absolute top-13 left-0 w-full bg-gray-200 dark:bg-black transition-all duration-300 ease-in ${isOpen ? "block" : "hidden"}`}>
-        <li><Link to="/" onClick={toggleMenu} className="block p-3">HOME</Link></li>
-        <li><Link to="/aboutUs" onClick={toggleMenu} className="block p-3">ABOUT</Link></li>
+      <ul className={`absolute top-13 left-0 w-full bg-[var(--bg-dark)] text-white transition-all duration-300 ease-in ${isOpen ? "block" : "hidden"}`}>
+        <li><Link to="/" onClick={() => setIsOpen(false)} className="block p-3">HOME</Link></li>
+        <li><Link to="/aboutUs" onClick={() => setIsOpen(false)} className="block p-3">ABOUT</Link></li>
         
         {/* Authentication Links */}
-        <AuthNavLinks user={user} handleLogout={handleLogout} toggleMenu={toggleMenu} />
+        <AuthNavLinks toggleMenu={() => setIsOpen(false)} user={user} handleLogout={handleLogout} />
       </ul>
     </>
   );

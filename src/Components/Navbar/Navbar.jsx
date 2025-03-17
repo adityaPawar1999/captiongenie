@@ -22,7 +22,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white dark:bg-black text-black dark:text-white px-10 shadow-md relative sm:bg-white sm:text-black">
+    <nav className="bg-[var(--bg-dark)] text-white px-10 shadow-md relative">
       <div className="container mx-auto flex justify-between items-center py-3">
         <Link to="/" className="text-xl font-bold">captionGEnie</Link>
 
@@ -35,17 +35,15 @@ const Navbar = () => {
           <li><Link to="/aboutUs" className="block p-3">About</Link></li>
 
           {/* Authentication Links */}
-          
           <AuthNavLinks user={user} handleLogout={handleLogout} />
+
+          {/* Dark Mode Toggle (Always White Button) */}
           <li className="hidden md:block sm:hidden pt-3">
-          <button onClick={() => setDarkMode(!darkMode)} className="text-black dark:text-white">
-            {darkMode ? <Sun size={24} /> : <Moon size={24} />}
-          </button>
+            <button onClick={() => setDarkMode(!darkMode)} className="text-white">
+              {darkMode ? <Sun size={24} /> : <Moon size={24} />}
+            </button>
           </li>
         </ul>
-
-        {/* Dark Mode Toggle (Desktop) */}
-        
       </div>
     </nav>
   );

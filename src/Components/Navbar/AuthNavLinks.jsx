@@ -6,9 +6,9 @@ const AuthNavLinks = ({ user, handleLogout, toggleMenu }) => {
     <>
       {user ? (
         <>
-          <li><Link to="/addpost" onClick={toggleMenu} className="block p-3">ADD POST</Link></li>
-          <li><Link to="/profile" onClick={toggleMenu} className="block p-3 uppercase">{user.name}</Link></li>
-          <li>
+          <li className=""><Link to="/addpost" onClick={toggleMenu} className="block p-3">ADD POST</Link></li>
+          <li className=""><Link to="/profile" onClick={toggleMenu} className="block p-3 uppercase">{user.name}</Link></li>
+          <li className="">
             <button onClick={() => { handleLogout(); toggleMenu(); }} className="flex items-center p-3">
               LOGOUT <LogOut className="ml-2" size={20} />
             </button>
@@ -16,8 +16,8 @@ const AuthNavLinks = ({ user, handleLogout, toggleMenu }) => {
         </>
       ) : (
         <>
-          <li><Link to="/login" onClick={toggleMenu} className="block p-3">LOGIN</Link></li>
-          <li><Link to="/signin" onClick={toggleMenu} className="block p-3">SIGNIN</Link></li>
+          <li className=""><Link to="/login" onClick={toggleMenu} className="block p-3">LOGIN</Link></li>
+          <li className=""><Link to="/signin" onClick={toggleMenu} className="block p-3">SIGNIN</Link></li>
         </>
       )}
     </>

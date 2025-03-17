@@ -1,37 +1,34 @@
-@import "tailwindcss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-    --text-color-1: #212121;
-    --text-color-2: #fff; /* Light mode text */
-    --text-color-3: #1c748d; /* Light mode text */
-    --bg-color: #ffffff;  /* Light mode background */
-    --text-color: #000000; /* Light mode text */
-    --primary-color: #22c55e; /* Green */
-    --secondary-color: #2563eb; /* Blue */
+  @import "tailwindcss";
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  :root {
+    --text-light: #121212;  /* Default text */
+    --text-dark: #fff;       /* Light mode text */
     
-  }
-  html.dark {
-    --text-color-1: #fff;
-    --text-color-2: #212121;
-    --text-color-3: #5c055c;
-    --bg-color: #111827;  /* Dark mode background */
-    --text-color: red; /* Neon Green */
-    --primary-color: #16a34a; /* Dark Green */
-    --secondary-color: #1e40af; /* Dark Blue */
-  }
-  
-/* Ensure dark mode works */
+    --bg-light: #fff;        /* Light mode background */
+    --bg-dark: #121212;      /* Dark mode background */
+    
+    --primary-color: #22c55e;  /* Green */
+    --secondary-color: #2563eb; /* Blue */
+
+    /* 🎯 Permanent Colors */
+    --always-black: #000000;  
+    --always-white: #ffffff;
+}
+
 html.dark {
-  background-color: black;
+    --text-light: #fff;
+    --text-dark: #121212;
 
-}
+          /* Light mode background */
+    --bg-dark-p: #121212;  
+    
+    --bg-light: #121212;
+    --bg-dark: #fff;
 
-html.dark .bg-white{
-  background-color: black !important;
-}
-html.dark .bg-gray-100{
-  background-color: black !important;
+    --primary-color: #16a34a;  /* Dark Green */
+    --secondary-color: #1e40af; /* Dark Blue */
+
+    /* Permanent colors remain unchanged */
 }
