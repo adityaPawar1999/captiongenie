@@ -22,8 +22,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-[var(--bg-dark)] text-white px-10 shadow-md relative">
-      <div className="container mx-auto flex justify-between items-center py-3">
+    <nav className="bg-[var(--always-black)] text-white px-10 shadow-md relative">
+      <div className="container mx-auto flex justify-between items-center ">
         <Link to="/" className="text-xl font-bold">captionGEnie</Link>
 
         {/* Mobile Navigation Component */}

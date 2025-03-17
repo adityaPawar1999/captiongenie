@@ -24,12 +24,23 @@ const App = () => {
         try {
           const res = await fetch("/api/auth", {
             method: "GET",
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { 
+              Authorization: `Bearer ${token}`,
+              Accept: "application/json"
+            },
           });
+          
+          // Check if response is JSON
+          const contentType = res.headers.get("content-type");
+          if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("Server returned non-JSON response");
+          }
+          
           const data = await res.json();
           if (res.ok) dispatch(signup(data));
         } catch (err) {
           console.error("Error fetching user:", err);
+          // Handle the error appropriately - could dispatch an error action here
         }
       };
       fetchUser();
@@ -48,17 +59,19 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="bg-white dark:bg-black dark:text-white min-h-screen">
+      <div className=" bg-[var(--bg-light)]">
         <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+
         <Routes>
-        <Route path="/" element={<AddPost />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/aboutUs" element={<AboutPage />} />
-        <Route path="/addpost" element={user ? <AddPost /> : <Navigate to="/login" />} />  {/* ✅ Fixed */}
+        <Route path="/addpost" element={user ? <AddPost /> : <Navigate to="/login" />} />  
         <Route path="/signin" element={user ? <Navigate to="/profile" /> : <SigninPage />} />
         <Route path="/login" element={user ? <Navigate to="/profile" /> : <LoginPage />} />
         <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/login" />} />
 
         </Routes>
+        
       </div>
     </BrowserRouter>
   );

@@ -19,7 +19,7 @@ const MobileNav = ({ darkMode, setDarkMode, user, handleLogout }) => {
       </div>
 
       {/* Mobile Navigation Links */}
-      <ul className={`absolute top-13 left-0 w-full bg-[var(--bg-dark)] text-white transition-all duration-300 ease-in ${isOpen ? "block" : "hidden"}`}>
+      <ul className={`absolute top-13 left-0 w-full bg-[var(--always-black)] text-white transition-all duration-300 ease-in ${isOpen ? "block" : "hidden"}`}>
         <li><Link to="/" onClick={() => setIsOpen(false)} className="block p-3">HOME</Link></li>
         <li><Link to="/aboutUs" onClick={() => setIsOpen(false)} className="block p-3">ABOUT</Link></li>
         

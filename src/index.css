@@ -3,26 +3,36 @@
   @tailwind components;
   @tailwind utilities;
   :root {
-    --text-light: #121212;  /* Default text */
-    --text-dark: #fff;       /* Light mode text */
+    --text-dark: #121212;  /* Default text */
+    --text-light: #fff;       /* Light mode text */
     
     --bg-light: #fff;        /* Light mode background */
     --bg-dark: #121212;      /* Dark mode background */
+     
+    /* 🎯 Permanent Colors */
+     --always-black: #000000;  
+     --always-white: #ffffff;
+
+    --link-btn-1:#E63946
     
     --primary-color: #22c55e;  /* Green */
-    --secondary-color: #2563eb; /* Blue */
-
-    /* 🎯 Permanent Colors */
-    --always-black: #000000;  
-    --always-white: #ffffff;
+    --secondary-color: #2563eb; /* Blue */  
+}
+.link-btn{
+  background: #d52534;
+  padding: 2px  6px;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 10px;
 }
 
 html.dark {
-    --text-light: #fff;
-    --text-dark: #121212;
+    --text-light: #121212;
+    --text-dark: #fff;
 
           /* Light mode background */
-    --bg-dark-p: #121212;  
+    --always-black: #000000;  
+    --always-white: #ffffff;
     
     --bg-light: #121212;
     --bg-dark: #fff;

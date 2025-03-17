@@ -1,7 +1,13 @@
-const HomePage =( ) =>{
-    return(<>
-      <div className="flex items-center justify-center h-screen bg-gray-100">
-        </div>
-    </>)
+import PostList from "../AppPosts/PostList"
+import MainImages from "./MainImages/MainImages"
+
+const HomePage = () =>{
+ return(
+  <>
+  <MainImages/>
+  <PostList/>
+    </>
+ )
+  
 }
-export default HomePage;
+export default HomePage
