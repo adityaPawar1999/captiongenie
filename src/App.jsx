@@ -22,12 +22,13 @@ const App = () => {
       // Fetch user details and dispatch them to Redux
       const fetchUser = async () => {
         try {
-          const res = await fetch("/api/auth", {
+          const res = await fetch("http://localhost:5010/api/auth", {
             method: "GET",
             headers: { 
               Authorization: `Bearer ${token}`,
               Accept: "application/json"
             },
+            credentials: 'include'
           });
           
           // Check if response is JSON

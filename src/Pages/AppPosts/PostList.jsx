@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../../Redux/postSlice";
 
+const BACKEND_URL = "http://localhost:5010";
+
 const PostList = () => {
   const dispatch = useDispatch();
   const { posts, loading, error } = useSelector((state) => state.posts);
@@ -24,9 +26,9 @@ const PostList = () => {
           {posts.map((post) => (
             <div key={post._id} className="bg-white shadow-md rounded-lg p-4">
               {/* Image Section */}
-              {post.images.length > 0 && (
+              {post.images && post.images.length > 0 && (
                 <img
-                  src={`http://localhost:5010/${post.images[0]}`} // ✅ Ensure correct image path
+                  src={`${BACKEND_URL}/${post.images[0]}`}
                   alt="Post"
                   className="w-full h-48 object-cover rounded-md mb-3"
                 />
@@ -34,6 +36,14 @@ const PostList = () => {
 
               {/* Post Title */}
               <h3 className="text-xl font-bold">{post.title}</h3>
+
+              {/* Creator and Date */}
+              <div className="mt-2 text-sm text-gray-600">
+                <p className="font-medium">
+                  Posted by: {post.user?.name || post.user?.username || "Anonymous"}
+                </p>
+                <p className="text-gray-500">{new Date(post.createdAt).toLocaleString()}</p>
+              </div>
 
               {/* Description */}
               <p className="text-gray-600 mt-2">{post.description.slice(0, 100)}...</p>

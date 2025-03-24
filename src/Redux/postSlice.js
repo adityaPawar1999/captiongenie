@@ -1,93 +1,113 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { getAuthToken } from "./authService";
+import API_CONFIG from "../config/api";
 
-// ✅ Function to get token
-const getAuthToken = () => localStorage.getItem("token");
+// Define Async Thunk for Fetching Posts
+export const fetchPosts = createAsyncThunk(
+    "posts/fetchPosts",
+    async (_, { rejectWithValue }) => {
+        try {
+            const token = getAuthToken();
+            if (!token) {
+                console.error("Authentication token not found");
+                return rejectWithValue("Please login to view posts");
+            }
 
-// ✅ Define Async Thunk for Submitting a Post
+            console.log("Attempting to fetch posts from:", API_CONFIG.POSTS_URL);
+            const response = await fetch(API_CONFIG.POSTS_URL, {
+                method: "GET",
+                headers: {
+                    ...API_CONFIG.headers,
+                    ...API_CONFIG.getAuthHeaders(token)
+                },
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Failed to fetch posts:", {
+                    status: response.status,
+                    statusText: response.statusText,
+                    error: errorText
+                });
+                return rejectWithValue(`Failed to fetch posts: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            console.log("Successfully fetched posts:", data);
+            return data;
+        } catch (error) {
+            console.error("Error in fetchPosts:", error);
+            return rejectWithValue(error.message || "Network error while fetching posts");
+        }
+    }
+);
+
+// Define Async Thunk for Submitting a Post
 export const submitPostAsync = createAsyncThunk(
     "posts/submitPost",
     async (postData, { rejectWithValue }) => {
       try {
-        const token = localStorage.getItem("token"); // Get stored token
-        console.log("🚀 Sending Token:", token); // Debugging log
-  
-        const response = await fetch("http://localhost:3001/api/posts/create", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // ✅ Include token
-          },
-          body: JSON.stringify(postData),
-          credentials: "include",
-        });
-  
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Failed to submit post");
+        const token = getAuthToken();
+        if (!token) {
+          return rejectWithValue("No valid authentication token found");
         }
-  
+
+        const response = await fetch(`${API_CONFIG.POSTS_URL}/create`, {
+          method: "POST",          
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: postData,
+          credentials: 'include'
+        });
+
+        if (!response.ok) {
+          const error = await response.text();
+          throw new Error(error || "Failed to submit post");
+        }
+
         return await response.json();
       } catch (error) {
-        return rejectWithValue(error.message);
+        return rejectWithValue(error.message || "Failed to submit post");
       }
     }
-  );
+);
 
-// ✅ Define Async Thunk for Fetching Posts
-export const fetchPosts = createAsyncThunk("posts/fetchPosts", async (_, { rejectWithValue }) => {
-    try {
-      const token = getAuthToken(); // Get stored token
-      const response = await fetch("http://localhost:3001/api/posts/all", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`, // ✅ Send token for fetching posts too
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error("Failed to fetch posts");
-      }
-  
-      return await response.json();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  });
-  
-
-// ✅ Define the Slice
-const postSlice = createSlice({
-  name: "posts",
-  initialState: { posts: [], loading: false, error: null },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchPosts.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchPosts.fulfilled, (state, action) => {
-        state.loading = false;
-        state.posts = action.payload;
-      })
-      .addCase(fetchPosts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(submitPostAsync.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(submitPostAsync.fulfilled, (state, action) => {
-        state.loading = false;
-        state.posts.push(action.payload.post); // Add new post to state
-      })
-      .addCase(submitPostAsync.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
-  },
+const postsSlice = createSlice({
+    name: "posts",
+    initialState: {
+        posts: [],
+        status: "idle",
+        error: null,
+    },
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchPosts.pending, (state) => {
+                state.status = "loading";
+                state.error = null;
+            })
+            .addCase(fetchPosts.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.posts = action.payload;
+            })
+            .addCase(fetchPosts.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(submitPostAsync.pending, (state) => {
+                state.status = "loading";
+                state.error = null;
+            })
+            .addCase(submitPostAsync.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.posts.push(action.payload);
+            })
+            .addCase(submitPostAsync.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            });
+    },
 });
 
-// ✅ Export Reducer
-export default postSlice.reducer;
+export default postsSlice.reducer;

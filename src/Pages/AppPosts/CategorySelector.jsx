@@ -13,9 +13,9 @@ const CategorySelector = ({ selectedCategories, setPost }) => {
     return (
       <div>
         <label>Categories</label>
-        <select multiple onChange={handleCategoryChange} className="w-full p-2 border rounded">
+        <select multiple onChange={handleCategoryChange} className="w-full p-2 border rounded" value={selectedCategories}>
           {categories.map((category) => (
-            <option key={category} value={category} selected={selectedCategories.includes(category)}>
+            <option key={category} value={category}>
               {category}
             </option>
           ))}

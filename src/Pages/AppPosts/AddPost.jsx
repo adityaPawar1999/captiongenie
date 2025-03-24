@@ -33,25 +33,35 @@ const AddPost = () => {
  const handleSubmit = async (e) => {
   e.preventDefault();
 
-  // Convert arrays to JSON strings before sending
   const formData = new FormData();
   formData.append("title", post.title);
   formData.append("description", post.description);
-  formData.append("categories", JSON.stringify(post.categories)); // 🔹 Convert to JSON string
-  formData.append("links", JSON.stringify(post.links)); // 🔹 Convert to JSON string
-  formData.append("tags", JSON.stringify(post.tags)); // 🔹 Convert to JSON string
+  formData.append("categories", JSON.stringify(post.categories));
+  formData.append("links", JSON.stringify(post.links));
+  formData.append("tags", JSON.stringify(post.tags));
 
-  // Append images one by one
+  // Append actual image files, not the preview objects
   post.images.forEach((image) => {
-    formData.append("images", image);
+    formData.append("images", image.file);
   });
 
   try {
-    await dispatch(submitPostAsync(formData)).unwrap();
+    const result = await dispatch(submitPostAsync(formData)).unwrap();
     alert("Post submitted successfully!");
+    // Reset form
+    setPost({
+      title: "",
+      categories: [],
+      description: "",
+      images: [],
+      links: [{ type: "Website", url: "" }],
+      tags: [],
+    });
   } catch (error) {
     console.error("Error submitting post:", error);
-  }}
+    alert(error.toString() || "Failed to submit post. Please try again later.");
+  }
+};
  ////////////////////////////////////
   return (
     <div className="flex justify-center items-center min-h-screen bg-white p-5">

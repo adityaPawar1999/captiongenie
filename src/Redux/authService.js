@@ -1,11 +1,20 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 // Set token in localStorage with secure handling
 export const setAuthToken = (token) => {
   if (!token) return;
-  const expirationTime = new Date().getTime() + 10 * 24 * 60 * 60 * 1000; // 10 days
-  localStorage.setItem("token", token);
-  localStorage.setItem("tokenExpiry", expirationTime.toString());
+  try {
+    const decoded = jwtDecode(token);
+    const expirationTime = decoded.exp * 1000; // Convert to milliseconds
+    localStorage.setItem("token", token);
+    localStorage.setItem("tokenExpiry", expirationTime.toString());
+    // Set token in axios default headers
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } catch (error) {
+    console.error("Invalid token format:", error);
+    removeAuthToken();
+  }
 };
 
 // Get token with validation
@@ -13,34 +22,48 @@ export const getAuthToken = () => {
   const token = localStorage.getItem("token");
   const expiry = localStorage.getItem("tokenExpiry");
 
-  if (token && expiry && new Date().getTime() < Number(expiry)) {
-    return token;
+  if (!token || !expiry) {
+    removeAuthToken();
+    return null;
   }
-  
-  // Clear invalid tokens
-  removeAuthToken();
-  return null;
+
+  const currentTime = new Date().getTime();
+  if (currentTime >= Number(expiry)) {
+    removeAuthToken();
+    return null;
+  }
+
+  // Set token in axios default headers
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return token;
+};
+
+// Remove token
+export const removeAuthToken = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("tokenExpiry");
+  localStorage.removeItem("user");
+  // Remove token from axios default headers
+  delete axios.defaults.headers.common['Authorization'];
 };
 
 // Login API Call
 export const loginUser = async (email, password) => {
   const response = await axios.post(
-    "http://localhost:3001/api/auth/login",
+    "http://localhost:5010/api/auth/login",
     { email, password },
     { withCredentials: true }
   );
-
   if (response.data.token) {
     setAuthToken(response.data.token);
   }
-
   return response.data;
 };
 
 // Logout API Call
 export const logoutUser = async () => {
   try {
-    await axios.post("http://localhost:3001/api/auth/logout", {}, 
+    await axios.post("http://localhost:5010/api/auth/logout", {}, 
       { withCredentials: true }
     );
   } catch (error) {
@@ -48,12 +71,5 @@ export const logoutUser = async () => {
   } finally {
     removeAuthToken();
   }
-};
-
-// Clean token removal
-export const removeAuthToken = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("tokenExpiry");
-  localStorage.removeItem("user");
 };
 
