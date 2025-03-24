@@ -73,6 +73,35 @@ export const submitPostAsync = createAsyncThunk(
     }
 );
 
+export const fetchSinglePost = createAsyncThunk(
+    "posts/fetchSinglePost",
+    async (postId, { rejectWithValue }) => {
+        try {
+            const token = getAuthToken();
+            if (!token) {
+                return rejectWithValue("Please login to view posts");
+            }
+
+            const response = await fetch(`${API_CONFIG.POSTS_URL}/${postId}`, {
+                method: "GET",
+                headers: {
+                    ...API_CONFIG.headers,
+                    ...API_CONFIG.getAuthHeaders(token)
+                },
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                return rejectWithValue(`Failed to fetch post: ${response.status} ${response.statusText}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            return rejectWithValue(error.message || "Network error while fetching post");
+        }
+    }
+);
+
 const postsSlice = createSlice({
     name: "posts",
     initialState: {
@@ -92,6 +121,18 @@ const postsSlice = createSlice({
                 state.posts = action.payload;
             })
             .addCase(fetchPosts.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(fetchSinglePost.pending, (state) => {
+                state.status = "loading";
+                state.error = null;
+            })
+            .addCase(fetchSinglePost.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.post = action.payload;
+            })
+            .addCase(fetchSinglePost.rejected, (state, action) => {
                 state.status = "failed";
                 state.error = action.payload;
             })

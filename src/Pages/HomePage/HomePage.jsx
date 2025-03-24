@@ -1,4 +1,4 @@
-import PostList from "../AppPosts/PostList"
+import PostList from "../PostList/PostList"
 import MainImages from "./MainImages/MainImages"
 
 const HomePage = () =>{

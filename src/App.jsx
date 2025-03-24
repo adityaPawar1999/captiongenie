@@ -10,6 +10,8 @@ import AboutPage from "./Pages/AboutPage/AboutPage";
 import SigninPage from "./Pages/SigninPage/SinginPage";
 import { isTokenValid } from "./Redux/isTokenValid";
 import AddPost from "./Pages/AppPosts/AddPost";
+import PostList from "./Pages/PostList/PostList";
+import SinglePost from "./Pages/PostList/SinglePost";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -70,7 +72,8 @@ const App = () => {
         <Route path="/signin" element={user ? <Navigate to="/profile" /> : <SigninPage />} />
         <Route path="/login" element={user ? <Navigate to="/profile" /> : <LoginPage />} />
         <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/login" />} />
-
+        <Route path="/post/:id" element={<SinglePost />} />
+        
         </Routes>
         
       </div>
