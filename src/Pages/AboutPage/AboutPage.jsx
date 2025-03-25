@@ -2,7 +2,7 @@ const AboutPage =() =>{
     return(
         <>
          <div className=" h-screen bg-white ">
-         <h1 className="text-[var(--text-color-3)] text-6xl">hwllo</h1>
+         <h1 className="text-[var(--text-color-3)] text-6xl">baby blue</h1>
          </div>
     
         </>
