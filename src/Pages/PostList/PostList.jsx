@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
+import DOMPurify from 'dompurify';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../../Redux/postSlice";
 import { Link } from "react-router-dom";
 
-const BACKEND_URL = "http://localhost:5010";
+const BACKEND_URL = "http://localhost:5003";
 
 const PostList = () => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const PostList = () => {
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
-    <div className="container mx-auto p-5">
+    <div className="max-w-7xl mx-auto p-4">
       <h2 className="text-3xl font-bold text-center mb-6">All Posts</h2>
 
       {posts.length === 0 ? (
@@ -48,9 +49,10 @@ const PostList = () => {
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-600 mt-2">
-                  {post.description?.slice(0, 100)}...
-                </p>
+                <div 
+                  className="text-gray-600 mt-2"
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.description?.slice(0, 100) + '...') }}
+                />
 
                 {/* Tags */}
                 <div className="mt-3">

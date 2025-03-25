@@ -50,7 +50,7 @@ export const removeAuthToken = () => {
 // Login API Call
 export const loginUser = async (email, password) => {
   const response = await axios.post(
-    "http://localhost:5010/api/auth/login",
+    "http://localhost:5003/api/auth/login",
     { email, password },
     { withCredentials: true }
   );
@@ -63,7 +63,7 @@ export const loginUser = async (email, password) => {
 // Logout API Call
 export const logoutUser = async () => {
   try {
-    await axios.post("http://localhost:5010/api/auth/logout", {}, 
+    await axios.post("http://localhost:5003/api/auth/logout", {}, 
       { withCredentials: true }
     );
   } catch (error) {

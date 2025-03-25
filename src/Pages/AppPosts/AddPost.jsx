@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { submitPostAsync } from "./../../Redux/postSlice";
-import RichTextEditor from "./RichTextEditor";
+import DOMPurify from 'dompurify';
 
 
 import ImageUpload from "./ImageUpload";
 import LinkManager from "./LinkManager";
-import TagSelector from "./TagSelector";
 import CategorySelector from "./CategorySelector";
+import RichTextEditor from "./RichTextEditor";
 
-import { uploadFiles } from "../../services/fileService";
 
 const AddPost = () => {
+
+  const categoryList = [
+    "Technology", "Lifestyle", "Travel", "Food", "Health", 
+    "Business", "Education", "Entertainment", "Science", "Sports"
+  ];
+
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.posts);
 
@@ -23,6 +28,7 @@ const AddPost = () => {
     links: [{ type: "Website", url: "" }],
     tags: [],
   });
+  const [errors, setErrors] = useState({ title: '', description: '', categories: '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,6 +38,31 @@ const AddPost = () => {
  //////////////////////////////////////
  const handleSubmit = async (e) => {
   e.preventDefault();
+
+  // Validation checks
+  const newErrors = {};
+  
+  if (!post.title.trim()) {
+    newErrors.title = 'Title is required';
+  }
+
+  const sanitized = DOMPurify.sanitize(post.description);
+  const textContent = new DOMParser().parseFromString(sanitized, 'text/html').body.textContent;
+  const wordCount = textContent.trim().split(/\s+/).length;
+  if (wordCount < 100) {
+    newErrors.description = 'Description must be at least 100 words';
+  }
+
+  if (post.categories.length < 1) {
+    newErrors.categories = 'At least 1 category required';
+  } else if (post.categories.length > 3) {
+    newErrors.categories = 'Maximum 3 categories allowed';
+  }
+
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    return;
+  }
 
   const formData = new FormData();
   formData.append("title", post.title);
@@ -73,13 +104,54 @@ const AddPost = () => {
           <div>
             <label>Title</label>
             <input type="text" name="title" value={post.title} onChange={handleChange} className="w-full p-2 border rounded" required />
+            {errors.title && <div className="text-red-500 text-sm mt-1">{errors.title}</div>}
           </div>
 
           {/* Categories */}
-          <CategorySelector selectedCategories={post.categories} setPost={setPost} />
-
+         
           {/* Description */}
-          <RichTextEditor content={post.description} setPost={setPost} />
+          <RichTextEditor description={post.description} setPost={setPost} className="min-h-[600px] max-h-[800px]"/>
+          {errors.description && <div className="text-red-500 text-sm mt-1">{errors.description}</div>}
+
+          {/* Categories */}
+          <CategorySelector selectedCategories={post.categories} setPost={setPost} />
+          {errors.categories && <div className="text-red-500 text-sm mt-1">{errors.categories}</div>}
+
+          {/* Tags */}
+          <div>
+            <label>Tags</label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                placeholder="Enter tag and click add"
+                className="flex-1 p-2 border rounded"
+                value={post.newTag || ""}
+                onChange={(e) => setPost(prev => ({...prev, newTag: e.target.value}))}
+              />
+              <button
+                type="button"
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+                onClick={() => {
+                  if (post.newTag && !post.tags.includes(post.newTag)) {
+                    setPost(prev => ({
+                      ...prev,
+                      tags: [...prev.tags, post.newTag],
+                      newTag: ""
+                    }));
+                  }
+                }}
+              >
+                Add
+              </button>
+            </div>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {post.tags.map((tag, index) => (
+                <span key={index} className="bg-gray-200 px-2 py-1 rounded text-sm">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
 
           {/* Image Upload */}
           <ImageUpload images={post.images} setPost={setPost} />
@@ -87,12 +159,8 @@ const AddPost = () => {
           {/* Links */}
           <LinkManager links={post.links} setPost={setPost} />
 
-          {/* Tags */}
-          <TagSelector tags={post.tags} setPost={setPost} />
-
-          {/* Submit */}
-          <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">
-            {loading ? "Submitting..." : "Submit Post"}
+          <button type="submit" disabled={loading} className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+            {loading ? 'Submitting...' : 'Submit Post'}
           </button>
         </form>
       </div>

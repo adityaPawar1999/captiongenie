@@ -1,6 +1,10 @@
 
+import { useState } from 'react';
+
 const CategorySelector = ({ selectedCategories, setPost }) => {
-    const categories = ["Tech", "Business", "Lifestyle", "Health"];
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [error, setError] = useState('');
+    const categories = ["Technology", "Lifestyle", "Travel", "Food", "Health", "Business", "Education", "Entertainment", "Science", "Sports", "Art", "Finance"];
   
     const handleCategoryChange = (e) => {
       const selectedOptions = [...e.target.options]
@@ -13,13 +17,46 @@ const CategorySelector = ({ selectedCategories, setPost }) => {
     return (
       <div>
         <label>Categories</label>
-        <select multiple onChange={handleCategoryChange} className="w-full p-2 border rounded" value={selectedCategories}>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setShowDropdown(!showDropdown)}
+            className="w-full p-2 border rounded text-left flex justify-between items-center"
+          >
+            {selectedCategories.length > 0 ? selectedCategories.join(', ') : 'Select categories'}
+            <span>▼</span>
+          </button>
+          {showDropdown && (
+            <div className="absolute z-10 w-full mt-1 bg-white border rounded shadow-lg max-h-48 overflow-y-auto">
+              {categories.map((category) => (
+                <label
+                  key={category}
+                  className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(category)}
+                    onChange={(e) => {
+                      const newSelection = e.target.checked
+                        ? [...selectedCategories, category]
+                        : selectedCategories.filter(c => c !== category);
+
+                      if (newSelection.length > 3) {
+                        setError('Maximum 3 categories allowed');
+                        return;
+                      }
+                      setError('');
+                      setPost(prev => ({ ...prev, categories: newSelection }));
+                    }}
+                    className="mr-2"
+                  />
+                  {category}
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+        {error && <div className="text-red-500 text-sm mt-1">{error}</div>}
       </div>
     );
   };

@@ -48,6 +48,7 @@ const SigninPage = () => {
   
   return (
     <div className="h-[50rem] flex items-center justify-center bg-gray-100">
+      <h1>lonely</h1>
       <div className="bg-white flex shadow-lg rounded-lg overflow-hidden w-3/5">
         
         {/* Left Side - Testimonial */}

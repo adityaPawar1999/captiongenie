@@ -47,9 +47,14 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-// Get all posts
-app.get('/api/posts', verifyToken, (req, res) => {
-  res.json(posts);
+// Get all posts - This endpoint is intentionally public and accessible without authentication
+// to allow both logged-in and non-logged-in users to view posts
+app.get('/api/posts', (req, res) => {
+  try {
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching posts', error: error.message });
+  }
 });
 
 // Create a new post

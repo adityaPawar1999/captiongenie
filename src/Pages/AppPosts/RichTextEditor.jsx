@@ -12,7 +12,7 @@ const RichTextEditor = ({ description, setPost }) => {
 
   return (
     <div>
-      <label>Description</label>
+      <label>Description </label>
       <div className="border rounded p-2">
         <EditorContent editor={editor} />
       </div>

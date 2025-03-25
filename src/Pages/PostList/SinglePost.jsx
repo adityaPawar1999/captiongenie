@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
+import DOMPurify from 'dompurify';
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSinglePost } from "../../Redux/postSlice"; 
 
-const BACKEND_URL = "http://localhost:5010";
+const BACKEND_URL = "http://localhost:5003";
 
 const SinglePost = () => {
   const { id } = useParams(); // Get the post ID from URL
@@ -20,9 +21,8 @@ const SinglePost = () => {
 
   return (
     <div className="container mx-auto p-5">
-      <h2 className="text-3xl font-bold text-center mb-4">{post.title}</h2>
+     
 
-      {/* Image */}
       {post.images?.length > 0 && (
         <img
           src={`${BACKEND_URL}/images/${post.images[0].replace("uploads/", "")}`}
@@ -30,14 +30,16 @@ const SinglePost = () => {
           className="w-full h-72 object-cover rounded-md mb-4"
         />
       )}
-
-      {/* Creator & Date */}
+ <h2 className="text-4xl md:text-6xl font-bold mb-4">{post.title}</h2>
       <p className="text-gray-500 text-sm">
-        Posted by: {post.user?.name || "Anonymous"} | {new Date(post.createdAt).toLocaleString()}
+      Posted by: {post.user?.name || post.user?.username || "Anonymous"} | {new Date(post.createdAt).toLocaleString()}
       </p>
 
       {/* Description */}
-      <p className="mt-4 text-lg">{post.description}</p>
+      <div 
+  className="mt-4 prose max-w-none"
+  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.description) }}
+/>
 
       {/* Tags */}
       <div className="mt-4">

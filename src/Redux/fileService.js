@@ -3,7 +3,7 @@ export const uploadFiles = async (files) => {
     files.forEach((file) => formData.append("images", file));
   
     try {
-      const response = await fetch("http://localhost:5010/api/uploads", {
+      const response = await fetch("http://localhost:5003/api/uploads", {
         method: "POST",
         body: formData,
       });
