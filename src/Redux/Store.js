@@ -2,32 +2,41 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
-import themeReducer from "./themeSlice";
-import authReducer from "./authSlice";
-import postReducer from "./postSlice"
- 
+import themeReducer from "./themeSlice.js";
+import authReducer from "./authSlice.js";
+import postReducer from "./postSlice.js";
+import {
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 
+// Persist configuration
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["theme"],
+  whitelist: ["auth", "theme", "posts"], // ✅ Persist auth and posts to maintain state
 };
 
-// Combine all reducers
+// Combine reducers
 const rootReducer = combineReducers({
   auth: authReducer,
   theme: themeReducer,
-  posts: postReducer, // ✅ Use the correct import
+  posts: postReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+// Configure store
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
 });

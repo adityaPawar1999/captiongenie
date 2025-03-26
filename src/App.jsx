@@ -11,6 +11,8 @@ import SigninPage from "./Pages/SigninPage/SinginPage";
 import { isTokenValid } from "./redux/isTokenValid.js";
 import AddPost from "./Pages/AppPosts/AddPost";
 import SinglePost from "./Pages/PostList/SinglePost";
+import authSlice from './redux/authSlice';
+import CategoriesNavbar from "./Components/CategoriesNavbar/CategoriesNavbar.jsx";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -48,6 +50,7 @@ const App = () => {
     <BrowserRouter>
       <div className="bg-[var(--bg-light)]">
         <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+        
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/aboutUs" element={<AboutPage />} />

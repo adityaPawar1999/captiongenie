@@ -5,7 +5,6 @@ import { logout } from "./../../Redux/authSlice";
 import { Sun, Moon } from "lucide-react";
 import AuthNavLinks from "./AuthNavLinks";
 import MobileNav from "./MobileNav";
-
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("theme") === "dark");
 
