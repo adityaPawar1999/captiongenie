@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getAuthToken } from "./authService";
-import API_CONFIG from "../config/api";
+import { API_CONFIG } from "../config/api";
 
 // Delete Post
 export const deletePost = createAsyncThunk(
