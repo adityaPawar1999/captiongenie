@@ -5,7 +5,7 @@ import EditPostForm from "../../Components/EditPostForm/EditPostForm";
 import LikesAndComments from "../../Components/LikesAndComments/LikesAndComments";
 import { categories, getCategoryColor } from "../../categories";
 
-const BACKEND_URL = "http://localhost:5003";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const MainPost = ({ post, isOwner, onDelete, onEditSubmit }) => {
   const [showEditForm, setShowEditForm] = useState(false);
