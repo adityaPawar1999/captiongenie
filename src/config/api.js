@@ -9,5 +9,5 @@ export const API_CONFIG = {
 
 export const getImageUrl = (imagePath) => {
   if (!imagePath) return '';
-  return `${BACKEND_URL}/images/${imagePath}`;
+  return `${BACKEND_URL}/images/${imagePath.replace('uploads/', '')}`;
 };
