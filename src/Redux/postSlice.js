@@ -2,6 +2,72 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getAuthToken } from "./authService";
 import API_CONFIG from "../config/api";
 
+// Delete Post
+export const deletePost = createAsyncThunk(
+  "posts/deletePost",
+  async (postId, { rejectWithValue }) => {
+    try {
+      console.time('deletePost');
+      const token = getAuthToken();
+      if (!token) {
+        console.error('No authentication token found');
+        return rejectWithValue("No authentication token found");
+      }
+
+      const response = await fetch(`${API_CONFIG.POSTS_URL}/delete/${postId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        console.error('Delete post failed:', error);
+        return rejectWithValue(error || "Failed to delete post");
+      }
+
+      console.timeEnd('deletePost');
+      return postId;
+    } catch (error) {
+      console.error('Error in deletePost:', error);
+      return rejectWithValue(error.message || "Error deleting post");
+    }
+  }
+);
+
+// Edit Post
+export const editPost = createAsyncThunk(
+  "posts/editPost",
+  async ({ postId, postData }, { rejectWithValue }) => {
+    try {
+      const token = getAuthToken();
+      if (!token) return rejectWithValue("No authentication token found");
+
+      const response = await fetch(`${API_CONFIG.POSTS_URL}/update/${postId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        return rejectWithValue(error || "Failed to update post");
+      }
+
+      const updatedPost = await response.json();
+      return updatedPost;
+    } catch (error) {
+      return rejectWithValue(error.message || "Error updating post");
+    }
+  }
+);
+
 // Fetch All Posts or By Category
 export const fetchPosts = createAsyncThunk(
     "posts/fetchPosts",
@@ -48,10 +114,9 @@ export const submitPostAsync = createAsyncThunk(
       const response = await fetch(`${API_CONFIG.POSTS_URL}/create`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(postData),
+        body: postData,
         credentials: "include",
       });
 
@@ -143,6 +208,37 @@ const postsSlice = createSlice({
         state.posts.push(action.payload);
       })
       .addCase(submitPostAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      
+      // Delete Post
+      .addCase(deletePost.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.posts = state.posts.filter(post => post._id !== action.payload);
+      })
+      .addCase(deletePost.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+
+      // Edit Post
+      .addCase(editPost.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(editPost.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        const index = state.posts.findIndex(post => post._id === action.payload._id);
+        if (index !== -1) {
+          state.posts[index] = action.payload;
+        }
+      })
+      .addCase(editPost.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

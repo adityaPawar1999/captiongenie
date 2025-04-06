@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import DOMPurify from "dompurify";
+import { editPost } from "../../Redux/postSlice";
+import EditPostForm from "../../Components/EditPostForm/EditPostForm";
 
 const BACKEND_URL = "http://localhost:5003";
 
@@ -10,8 +13,22 @@ const formatDate = (dateString) => {
 };
 
 const PostWithImage = ({ post }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const [showEditForm, setShowEditForm] = useState(false);
+
+  const isOwner = user && (user.id === post.user?._id || user._id === post.user?._id);
+
   return (
-    <Link to={`/post/${post._id}`}>
+    <>
+      {showEditForm && (
+        <EditPostForm
+          post={post}
+          onClose={() => setShowEditForm(false)}
+          onSubmit={handleEditSubmit}
+        />
+      )}
+      <Link to={`/post/${post._id}`}>
       <div className="bg-white shadow-md overflow-hidden hover:shadow-lg transition border flex flex-col h-full md:max-w-md mx-auto">
         {/* Image */}
         <img
@@ -42,8 +59,10 @@ const PostWithImage = ({ post }) => {
             }}
           />
         </div>
+
       </div>
     </Link>
+    </>
   );
 };
 export default PostWithImage;

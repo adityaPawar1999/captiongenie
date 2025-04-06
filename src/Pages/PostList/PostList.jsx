@@ -4,10 +4,11 @@ import { fetchPosts } from "../../Redux/postSlice";
 import CategoriesNavbar from "../../Components/CategoriesNavbar/CategoriesNavbar";
 import PostWithImage from "./PostWithImage";
 import PostWithoutImage from "./PostWithoutImage";
+import { getCategoryColor } from "./../../categories"; // ✅ Import utility
+
 const PostList = () => {
   const dispatch = useDispatch();
-  const { posts, status, error } = useSelector((state) => state.posts);
-  const selectedCategory = useSelector((state) => state.posts.selectedCategory);
+  const { posts, status, error, selectedCategory } = useSelector((state) => state.posts);
 
   useEffect(() => {
     dispatch(fetchPosts(selectedCategory));
@@ -27,20 +28,20 @@ const PostList = () => {
       </h2>
 
       {posts.length === 0 ? (
-        <p className="text-center">No posts available</p>
+        <p className="text-center text-gray-500">No posts available</p>
       ) : (
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* Left Side - Posts with Images (2 columns) */}
+          {/* Left Side - Posts With Images (2 columns) */}
           <div className="lg:col-span-2 grid md:grid-cols-2 gap-6">
-            {postsWithImages.map((post) => (
-              <PostWithImage key={post._id} post={post} />
+            {[...postsWithImages].reverse().map((post) => (
+              <PostWithImage key={post._id} post={post} getCategoryColor={getCategoryColor} />
             ))}
           </div>
 
           {/* Right Side - Posts Without Images (1 column) */}
           <div className="space-y-6">
-            {postsWithoutImages.map((post) => (
-              <PostWithoutImage key={post._id} post={post} />
+          {[...postsWithoutImages].reverse().map((post) => (
+              <PostWithoutImage key={post._id} post={post} getCategoryColor={getCategoryColor} />
             ))}
           </div>
         </div>
