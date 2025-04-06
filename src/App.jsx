@@ -7,7 +7,7 @@ import LoginPage from "./Pages/LoginPage/LoginPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import AboutPage from "./Pages/AboutPage/AboutPage";
 import SigninPage from "./Pages/SigninPage/SinginPage";
-import { isTokenValid } from "./redux/isTokenValid.js";
+import { isTokenValid } from "./Redux/isTokenValid.js";
 import AddPost from "./Pages/AppPosts/AddPost";
 import SinglePost from "./Pages/PostList/SinglePost";
 

@@ -32,7 +32,7 @@ const PostList = () => {
       ) : (
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Left Side - Posts With Images (2 columns) */}
-          <div className="lg:col-span-2 grid md:grid-cols-2 gap-6">
+          <div className="lg:col-span-2 grid md:grid-cols-2 gap-2">
             {[...postsWithImages].reverse().map((post) => (
               <PostWithImage key={post._id} post={post} getCategoryColor={getCategoryColor} />
             ))}

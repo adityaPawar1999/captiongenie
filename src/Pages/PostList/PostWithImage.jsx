@@ -29,7 +29,7 @@ const PostWithImage = ({ post }) => {
         />
       )}
       <Link to={`/post/${post._id}`}>
-      <div className="bg-white shadow-md overflow-hidden hover:shadow-lg transition border flex flex-col h-full md:max-w-md mx-auto">
+      <div className="bg-white shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] border flex flex-col h-full w-full md:max-w-md mx-auto mb-1">
         {/* Image */}
         <img
           src={`${BACKEND_URL}/images/${post.images[0].replace("uploads/", "")}`}
