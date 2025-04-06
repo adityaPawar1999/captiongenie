@@ -32,7 +32,7 @@ const MainImages = () => {
             <div key={post._id} className="relative h-[300px] w-full overflow-hidden group">
               <Link to={`/post/${post._id}`}>
                 <img
-                  src={`http://localhost:5003/images/${post.images[0]?.replace("uploads/", "")}`}
+                  src={`${import.meta.env.VITE_BACKEND_URL}/images/${post.images[0]?.replace("uploads/", "")}`}
                   alt={post.title}
                   className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
                 />
@@ -56,7 +56,7 @@ const MainImages = () => {
           <div key={post._id} className="relative h-full w-full overflow-hidden group">
             <Link to={`/post/${post._id}`}>
               <img
-                src={`http://localhost:5003/images/${post.images[0]?.replace("uploads/", "")}`}
+                src={`${import.meta.env.VITE_BACKEND_URL}/images/${post.images[0]?.replace("uploads/", "")}`}
                 alt={post.title}
                 className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
               />
@@ -80,7 +80,7 @@ const MainImages = () => {
           <div className="relative col-span-1 row-span-2 h-full w-full overflow-hidden group">
             <Link to={`/post/${randomPosts[0]._id}`}>
               <img
-                src={`http://localhost:5003/images/${randomPosts[0].images[0]?.replace("uploads/", "")}`}
+                src={`${import.meta.env.VITE_BACKEND_URL}/images/${randomPosts[0].images[0]?.replace("uploads/", "")}`}
                 alt={randomPosts[0].title}
                 className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
               />
@@ -102,7 +102,7 @@ const MainImages = () => {
             <div key={post._id} className="relative h-1/2 w-full overflow-hidden group">
               <Link to={`/post/${post._id}`}>
                 <img
-                  src={`http://localhost:5003/images/${post.images[0]?.replace("uploads/", "")}`}
+                  src={`${import.meta.env.VITE_BACKEND_URL}/images/${post.images[0]?.replace("uploads/", "")}`}
                   alt={post.title}
                   className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
                 />
