@@ -32,7 +32,7 @@ const MainImages = () => {
             <div key={post._id} className="relative h-[300px] w-full overflow-hidden group">
               <Link to={`/post/${post._id}`}>
                 <img
-                  src={`${import.meta.env.VITE_BACKEND_URL}/images/${post.images[0]?.replace("uploads/", "")}`}
+                  src={getImageUrl(post.images[0])}
                   alt={post.title}
                   className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
                 />
@@ -56,7 +56,7 @@ const MainImages = () => {
           <div key={post._id} className="relative h-full w-full overflow-hidden group">
             <Link to={`/post/${post._id}`}>
               <img
-                src={`${import.meta.env.VITE_BACKEND_URL}/images/${post.images[0]?.replace("uploads/", "")}`}
+                src={getImageUrl(post.images[0])}
                 alt={post.title}
                 className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
               />
@@ -102,7 +102,7 @@ const MainImages = () => {
             <div key={post._id} className="relative h-1/2 w-full overflow-hidden group">
               <Link to={`/post/${post._id}`}>
                 <img
-                  src={`${import.meta.env.VITE_BACKEND_URL}/images/${post.images[0]?.replace("uploads/", "")}`}
+                  src={getImageUrl(post.images[0])}
                   alt={post.title}
                   className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
                 />
