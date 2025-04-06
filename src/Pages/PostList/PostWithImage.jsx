@@ -5,7 +5,7 @@ import DOMPurify from "dompurify";
 import { editPost } from "../../Redux/postSlice";
 import EditPostForm from "../../Components/EditPostForm/EditPostForm";
 
-const BACKEND_URL = "http://localhost:5003";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const formatDate = (dateString) => {
   const options = { day: "2-digit", month: "long", year: "numeric" };

@@ -6,7 +6,7 @@ import LeftPost from "./LeftPost";
 import MainPost from "./MainPost";
 import RightPost from "./RightPost";
 
-const BACKEND_URL = "http://localhost:5003";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const SinglePost = () => {
   const { id } = useParams();

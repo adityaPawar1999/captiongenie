@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { getCategoryColor } from "../../categories"; // Adjust path if needed
 
-const BACKEND_URL = "http://localhost:5003";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const RightPost = ({ relatedPosts }) => {
   return (
