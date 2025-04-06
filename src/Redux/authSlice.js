@@ -10,7 +10,7 @@ export const login = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5003/api/auth/login",
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
         userData,
         { withCredentials: true }
       );
@@ -36,7 +36,7 @@ export const signup = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5003/api/auth/signup",
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`,
         userData,
         { withCredentials: true }
       );
