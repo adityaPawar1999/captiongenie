@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DOMPurify from "dompurify";
 import { useDispatch } from "react-redux";
 import EditPostForm from "../../Components/EditPostForm/EditPostForm";
+import LikesAndComments from "../../Components/LikesAndComments/LikesAndComments";
 import { categories, getCategoryColor } from "../../categories";
 
 const BACKEND_URL = "http://localhost:5003";
@@ -93,6 +94,8 @@ const MainPost = ({ post, isOwner, onDelete, onEditSubmit }) => {
           </button>
         </div>
       )}
+      
+      <LikesAndComments postId={post._id} post={post} />
     </div>
   );
 };

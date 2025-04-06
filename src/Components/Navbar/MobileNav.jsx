@@ -18,11 +18,24 @@ const MobileNav = ({ darkMode, setDarkMode, user, handleLogout }) => {
         </button>
       </div>
 
-      {/* Mobile Navigation Links */}
-      <ul className={`absolute top-13 left-0 w-full bg-[var(--always-black)] text-white transition-all duration-300 ease-in ${isOpen ? "block" : "hidden"}`}>
-        <li><Link to="/" onClick={() => setIsOpen(false)} className="block p-3">HOME</Link></li>
-        <li><Link to="/aboutUs" onClick={() => setIsOpen(false)} className="block p-3">ABOUT</Link></li>
-        
+      {/* Mobile Navigation Links with Glass Effect */}
+      <ul className={`fixed top-16 left-0 w-full h-[calc(100vh-4rem)] 
+  bg-black/40 backdrop-blur-md border-t border-white/20 
+  text-white transition-all duration-300 ease-in z-50 
+  overflow-y-auto ${isOpen ? "block" : "hidden"}`}>
+
+
+        <li>
+          <Link to="/" onClick={() => setIsOpen(false)} className="block py-4 px-6 hover:bg-white/20">
+            HOME
+          </Link>
+        </li>
+        <li>
+          <Link to="/aboutUs" onClick={() => setIsOpen(false)} className="block py-4 px-6 hover:bg-white/20">
+            ABOUT
+          </Link>
+        </li>
+
         {/* Authentication Links */}
         <AuthNavLinks toggleMenu={() => setIsOpen(false)} user={user} handleLogout={handleLogout} />
       </ul>

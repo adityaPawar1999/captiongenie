@@ -167,6 +167,7 @@ const postsSlice = createSlice({
     setSelectedCategory: (state, action) => {
       state.selectedCategory = action.payload;
     },
+
   },
   extraReducers: (builder) => {
     builder
