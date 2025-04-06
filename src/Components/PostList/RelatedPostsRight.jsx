@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const RelatedPostsRight = ({ relatedPosts }) => {
   return (
     <div className="w-1/4 p-4 bg-gray-100 rounded-lg">
@@ -10,7 +12,7 @@ const RelatedPostsRight = ({ relatedPosts }) => {
           <li key={post._id} className="border-b pb-4">
             {post.images?.length > 0 && (
               <img 
-                src={`http://localhost:5003/images/${post.images[0].replace("uploads/", "")}`}
+                src={`${BACKEND_URL}/images/${post.images[0].replace("uploads/", "")}`}
                 alt={post.title}
                 className="w-full h-32 object-cover rounded-md mb-2"
               />
