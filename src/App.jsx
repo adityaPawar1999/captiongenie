@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signup } from "./redux/authSlice.js";
 import Navbar from "./Components/Navbar/Navbar";
 import HomePage from "./Pages/HomePage/HomePage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
@@ -11,8 +10,6 @@ import SigninPage from "./Pages/SigninPage/SinginPage";
 import { isTokenValid } from "./redux/isTokenValid.js";
 import AddPost from "./Pages/AppPosts/AddPost";
 import SinglePost from "./Pages/PostList/SinglePost";
-import authSlice from './redux/authSlice';
-import CategoriesNavbar from "./Components/CategoriesNavbar/CategoriesNavbar.jsx";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -21,24 +18,7 @@ const App = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-    if (!token || !isTokenValid(token)) return; // Stop execution if token is invalid
-
-    // const fetchUser = async () => {
-    //   try {
-    //     const res = await fetch("http://localhost:5003/api/auth", {
-    //       method: "GET",
-    //       headers: { Authorization: `Bearer ${token}`, Accept: "application/json" }
-    //     });
-
-    //     if (!res.ok) throw new Error("Failed to fetch user data");
-    //     const data = await res.json();
-    //     dispatch(signup(data));
-    //   } catch (err) {
-    //     console.error("Error fetching user:", err);
-    //   }
-    // };
-
-    // fetchUser();
+    if (!token || !isTokenValid(token)) return;
   }, [dispatch]);
 
   useEffect(() => {
@@ -50,7 +30,6 @@ const App = () => {
     <BrowserRouter>
       <div className="bg-[var(--bg-light)]">
         <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-        
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/aboutUs" element={<AboutPage />} />
