@@ -17,12 +17,12 @@ const AboutUs = () => {
         <h2 className="text-2xl font-semibold mb-4">Our Team</h2>
         <div className="grid md:grid-cols-2 gap-6">
           <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-xl font-medium mb-2">John Doe</h3>
+            <h3 className="text-xl font-medium mb-2">Aditya Pawar</h3>
             <p className="text-gray-600">Founder & CEO</p>
           </div>
           <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-xl font-medium mb-2">Jane Smith</h3>
-            <p className="text-gray-600">Lead Developer</p>
+            <h3 className="text-xl font-medium mb-2">Aditya Pawar</h3>
+            <p className="text-gray-600">Web Developer</p>
           </div>
         </div>
       </section>
@@ -30,7 +30,7 @@ const AboutUs = () => {
       <section>
         <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
         <p className="text-gray-700 mb-4">
-          Have questions? Reach out to us at <a href="mailto:info@captiongenie.com" className="text-blue-600">info@captiongenie.com</a>
+          Have questions? Reach out to us at <a href="adityapawar8909@gmail.com" className="text-blue-600">adityapawar8909@gmail.com</a>
         </p>
       </section>
     </div>
