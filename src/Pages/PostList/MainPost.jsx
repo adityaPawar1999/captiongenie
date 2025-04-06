@@ -21,7 +21,7 @@ const MainPost = ({ post, isOwner, onDelete, onEditSubmit }) => {
   };
 
   return (
-    <div className="w-2/4 px-4">
+    <div className=" ">
       {showEditForm && (
         <EditPostForm
           post={post}

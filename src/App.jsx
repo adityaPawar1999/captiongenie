@@ -30,6 +30,7 @@ const App = () => {
     <BrowserRouter>
       <div className="bg-[var(--bg-light)]">
         <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+        <br/><br/><br/>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/aboutUs" element={<AboutPage />} />

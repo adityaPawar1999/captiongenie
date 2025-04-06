@@ -32,7 +32,7 @@ const MobileNav = ({ darkMode, setDarkMode, user, handleLogout }) => {
         </li>
         <li>
           <Link to="/aboutUs" onClick={() => setIsOpen(false)} className="block py-4 px-6 hover:bg-white/20">
-            ABOUT
+            ABOUT US
           </Link>
         </li>
 

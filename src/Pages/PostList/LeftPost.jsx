@@ -11,7 +11,7 @@ const LeftPost = ({ relatedPosts, username }) => {
     : relatedPosts;
 
   return (
-    <div className="w-1/4 pr-4">
+    <div className=" ">
       <h3 className="text-xl font-bold mb-4">
         {username ? `${username}'s Posts` : "Your Posts"}
       </h3>

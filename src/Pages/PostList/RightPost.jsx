@@ -7,7 +7,7 @@ const BACKEND_URL = "http://localhost:5003";
 
 const RightPost = ({ relatedPosts }) => {
   return (
-    <div className="w-1/4 pl-4">
+    <div className="">
       {relatedPosts.length > 0 ? (
         relatedPosts.map((post) => (
           <Link key={post._id} to={`/post/${post._id}`} className="block mb-4">

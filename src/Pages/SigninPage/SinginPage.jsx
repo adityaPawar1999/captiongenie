@@ -48,11 +48,10 @@ const SigninPage = () => {
   
   return (
     <div className="h-[50rem] flex items-center justify-center bg-gray-100">
-      <h1>lonely</h1>
-      <div className="bg-white flex shadow-lg rounded-lg overflow-hidden w-3/5">
+      <div className="bg-white flex flex-col md:flex-row shadow-lg rounded-lg overflow-hidden w-full md:w-3/5">
         
         {/* Left Side - Testimonial */}
-        <div className="w-1/2 bg-gray-200 flex flex-col justify-center relative">
+        <div className="hidden md:block md:w-1/2 bg-gray-200 flex flex-col justify-center relative">
           <img 
             src="https://images.unsplash.com/flagged/photo-1555475693-6e207bee0737?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Testimonial" 
@@ -69,7 +68,7 @@ const SigninPage = () => {
         </div>
 
         {/* Right Side - Sign In Form */}
-        <div className="w-1/2 p-10 flex flex-col justify-center">
+        <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center">
           <h2 className="text-2xl font-bold text-gray-900">Create an account</h2>
           <p className="text-gray-600 text-sm mb-4">Let's get started with your 30-day free trial.</p>
           

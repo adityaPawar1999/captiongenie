@@ -21,7 +21,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-[var(--always-black)] text-white px-10 shadow-md fixed top-0 left-0 right-0 z-50 p-5">
+    <nav className="bg-[var(--always-black)] text-white px-10 shadow-md fixed top-0 left-0 right-0 z-50 p-4 ">
       <div className="container mx-auto flex justify-between items-center ">
         <Link to="/" className="text-xl font-bold">captionGEnie</Link>
 
@@ -31,7 +31,7 @@ const Navbar = () => {
         {/* Desktop Navigation Links */}
         <ul className="hidden md:flex md:space-x-6">
           <li><Link to="/" className="block p-3">HOME</Link></li>
-          <li><Link to="/aboutUs" className="block p-3">About</Link></li>
+          <li><Link to="/aboutUs" className="block p-3">ABOUT</Link></li>
 
           {/* Authentication Links */}
           <AuthNavLinks user={user} handleLogout={handleLogout} />

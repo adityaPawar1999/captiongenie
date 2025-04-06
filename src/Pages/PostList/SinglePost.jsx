@@ -70,16 +70,41 @@ const SinglePost = () => {
   if (!post) return <p className="text-center">Post not found</p>;
 
   return (
-    <div className="container mx-auto p-5 flex">
-      <LeftPost relatedPosts={userPosts} username={post.user?.name || ""} />
-      <MainPost 
-        post={post} 
-        isOwner={isOwner} 
-        onDelete={handleDelete}
-        onEditSubmit={handleEditSubmit}
-      />
-      <RightPost relatedPosts={relatedPosts.filter(p => p.images?.length)} />
+    <div className="container mx-auto p-5">
+      {/* Unified Grid Layout for all devices */}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
+        {/* Mobile: Stacked (full width) */}
+        <div className="md:hidden space-y-6">
+          <MainPost 
+            post={post} 
+            isOwner={isOwner} 
+            onDelete={handleDelete}
+            onEditSubmit={handleEditSubmit}
+          />
+          <RightPost relatedPosts={relatedPosts.filter(p => p.images?.length)} />
+          <LeftPost relatedPosts={userPosts} username={post.user?.name || ""} />
+        </div>
+
+        {/* Tablet & Desktop: Grid Layout */}
+        <div className="hidden md:col-span-3 md:block">
+          <LeftPost relatedPosts={userPosts} username={post.user?.name || ""} />
+        </div>
+
+        <div className="hidden md:col-span-6 md:block">
+          <MainPost 
+            post={post} 
+            isOwner={isOwner} 
+            onDelete={handleDelete}
+            onEditSubmit={handleEditSubmit}
+          />
+        </div>
+
+        <div className="hidden md:col-span-3 md:block">
+          <RightPost relatedPosts={relatedPosts.filter(p => p.images?.length)} />
+        </div>
+      </div>
     </div>
+
   );
 };
 
