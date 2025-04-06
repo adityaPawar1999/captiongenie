@@ -1,4 +1,4 @@
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5003';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://believable-truth-production-58ad.up.railway.app';
 
 export const API_CONFIG = {
   BASE_URL: BACKEND_URL,
