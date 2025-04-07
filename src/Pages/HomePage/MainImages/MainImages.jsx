@@ -19,8 +19,8 @@ const MainImages = () => {
 
   useEffect(() => {
     const postsWithImages = posts.filter((post) => post.images?.length > 0);
-    const shuffled = [...postsWithImages].sort(() => 0.5 - Math.random());
-    setRandomPosts(shuffled.slice(0, 3));
+    const sortedByLikes = [...postsWithImages].sort((a, b) => (b.likes?.length || 0) - (a.likes?.length || 0));
+    setRandomPosts(sortedByLikes.slice(0, 3));
   }, [posts]);
 
   return (

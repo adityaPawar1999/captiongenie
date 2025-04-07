@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../Redux/authSlice";
-
 import { useNavigate } from "react-router-dom";
 import { setAuthToken } from "../../Redux/authService";
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const LoginPage = () => {
   const [email, setEmail] = useState(""); // Define email state
@@ -17,9 +18,14 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+    
+    if (!backendUrl) {
+      setError("Backend URL is not configured");
+      return;
+    }
   
     try {
-      const result = await dispatch(login({ email, password }));
+      const result = await dispatch(login({ email, password, backendUrl }));
     
       if (login.fulfilled.match(result)) {
         const token = result.payload?.token; // ✅ Ensure token comes from API
