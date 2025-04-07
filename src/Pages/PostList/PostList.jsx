@@ -14,8 +14,10 @@ const PostList = () => {
     dispatch(fetchPosts(selectedCategory));
   }, [dispatch, selectedCategory]);
 
+  const [visiblePostsCount, setVisiblePostsCount] = useState(8);
   const postsWithImages = posts.filter((post) => post.images?.length > 0);
   const postsWithoutImages = posts.filter((post) => !post.images?.length);
+  const visiblePosts = [...postsWithImages].reverse().slice(0, visiblePostsCount);
 
   if (status === "loading") return <p className="text-center">Loading...</p>;
   if (status === "failed") return <p className="text-center text-red-500">Error: {error}</p>;
@@ -33,9 +35,19 @@ const PostList = () => {
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Left Side - Posts With Images (2 columns) */}
           <div className="lg:col-span-2 grid md:grid-cols-2 gap-2">
-            {[...postsWithImages].reverse().map((post) => (
+            {visiblePosts.map((post) => (
               <PostWithImage key={post._id} post={post} getCategoryColor={getCategoryColor} />
             ))}
+            {postsWithImages.length > visiblePostsCount && (
+              <div className="col-span-full flex justify-center mt-4">
+                <button 
+                  onClick={() => setVisiblePostsCount(visiblePostsCount + 6)}
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                  See More
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Right Side - Posts Without Images (1 column) */}

@@ -51,7 +51,7 @@ const MainPost = ({ post, isOwner, onDelete, onEditSubmit }) => {
       )}
 
       <p className="text-gray-500 text-sm">
-        Posted by: {post.user?.name || post.user?.username || "Anonymous"} |{" "}
+        Posted by: <Link to={`/profile/${post.user?._id}`} className="hover:underline">{post.user?.name || post.user?.username || "Anonymous"}</Link> |{" "}
         {new Date(post.createdAt).toLocaleString()}
       </p>
 

@@ -3,6 +3,10 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { categories } from "../../../categories";
 
+const getImageUrl = (imagePath) => {
+  return `${import.meta.env.VITE_BACKEND_URL}/images/${imagePath?.replace("uploads/", "")}`;
+};
+
 const getCategoryColor = (category) => {
   if (!category) return "bg-gray-400 text-white p-1 rounded-sm uppercase text-[12px] font-bold";
 

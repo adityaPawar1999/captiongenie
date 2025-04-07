@@ -6,38 +6,51 @@ import { getCategoryColor } from "../../categories"; // Adjust path if needed
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const RightPost = ({ relatedPosts }) => {
+  const [visiblePostsCount, setVisiblePostsCount] = useState(6);
+  const visiblePosts = relatedPosts.slice(0, visiblePostsCount);
+
   return (
     <div className="">
       {relatedPosts.length > 0 ? (
-        relatedPosts.map((post) => (
-          <Link key={post._id} to={`/post/${post._id}`} className="block mb-4">
-            <div className="bg-white shadow rounded overflow-hidden">
-              {post.images?.length > 0 && (
-                <img
-                  src={`${BACKEND_URL}/images/${post.images[0].replace("uploads/", "")}`}
-                  alt={post.title}
-                  className="w-full h-32 object-cover"
-                />
-              )}
-              <div className="p-3">
-                {post.categories?.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mb-1">
-                    {post.categories.map((cat, idx) => (
-                      <span key={idx} className={getCategoryColor(cat)}>
-                        {cat}
-                      </span>
-                    ))}
-                  </div>
+        <>
+          {visiblePosts.map((post) => (
+            <Link key={post._id} to={`/post/${post._id}`} className="block mb-4">
+              <div className="bg-white shadow rounded overflow-hidden">
+                {post.images?.length > 0 && (
+                  <img
+                    src={`${BACKEND_URL}/images/${post.images[0].replace("uploads/", "")}`}
+                    alt={post.title}
+                    className="w-full h-32 object-cover"
+                  />
                 )}
-                <h4 className="font-semibold text-sm mt-1">{post.title}</h4>
-                <div
-                  className="text-xs text-gray-600 line-clamp-2"
-                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.description) }}
-                />
+                <div className="p-3">
+                  {post.categories?.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mb-1">
+                      {post.categories.map((cat, idx) => (
+                        <span key={idx} className={getCategoryColor(cat)}>
+                          {cat}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <h4 className="font-semibold text-sm mt-1">{post.title}</h4>
+                  <div
+                    className="text-xs text-gray-600 line-clamp-2"
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.description) }}
+                  />
+                </div>
               </div>
-            </div>
-          </Link>
-        ))
+            </Link>
+          ))}
+          {relatedPosts.length > visiblePostsCount && (
+            <button 
+              onClick={() => setVisiblePostsCount(visiblePostsCount + 4)}
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full"
+            >
+              See More
+            </button>
+          )}
+        </>
       ) : (
         <p className="text-gray-500">No related posts found</p>
       )}

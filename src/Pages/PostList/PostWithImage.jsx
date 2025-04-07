@@ -47,7 +47,7 @@ const PostWithImage = ({ post }) => {
           {/* Date & Post Owner */}
           <div className="text-gray-600 text-xs sm:text-sm mb-2 flex justify-between">
             <p>
-              <span>{formatDate(post.createdAt)}</span> <span>|</span> <span>By: {post.user?.name || "Anonymous"}</span>
+              <span>{formatDate(post.createdAt)}</span> <span>|</span> <span>By: <Link to={`/profile/${post.user?._id}`} className="hover:underline">{post.user?.name || "Anonymous"}</Link></span>
             </p>
           </div>
 

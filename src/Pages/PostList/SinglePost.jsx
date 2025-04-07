@@ -6,6 +6,13 @@ import LeftPost from "./LeftPost";
 import MainPost from "./MainPost";
 import RightPost from "./RightPost";
 
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+};
+
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const SinglePost = () => {
@@ -20,6 +27,7 @@ const SinglePost = () => {
 
   useEffect(() => {
     dispatch(fetchSinglePost(id));
+    scrollToTop();
   }, [dispatch, id]);
 
   useEffect(() => {
