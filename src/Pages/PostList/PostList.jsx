@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../../Redux/postSlice";
 import CategoriesNavbar from "../../Components/CategoriesNavbar/CategoriesNavbar";

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { getCategoryColor } from "../../categories"; // ✅ Import utility from categories.js
