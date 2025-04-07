@@ -32,7 +32,7 @@ const CategorySelector = ({ selectedCategories, setPost }) => {
               {categories.map((category) => (
                 <label
                   key={category}
-                  className={`flex items-center p-2 hover:${getCategoryColor(category).split(' ')[0]}-200 cursor-pointer`}
+                  className={`flex items-center p-2 ${getCategoryColor(category).hover}-200 cursor-pointer`}
                 >
                   <input
                     type="checkbox"

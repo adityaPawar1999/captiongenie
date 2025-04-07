@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { useDispatch } from "react-redux";
 import EditPostForm from "../../Components/EditPostForm/EditPostForm";
@@ -21,7 +22,7 @@ const MainPost = ({ post, isOwner, onDelete, onEditSubmit }) => {
   };
 
   return (
-    <div className=" ">
+    <div className="bg-[var(--bg-light)] text-[var(--text-dark)]">
       {showEditForm && (
         <EditPostForm
           post={post}

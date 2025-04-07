@@ -2,18 +2,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import DOMPurify from "dompurify";
-import { categories } from "../../categories"; // Import color mapping
+import { getCategoryColor } from "../../categories";
 import { deletePost, editPost } from "../../Redux/postSlice";
 import EditPostForm from "../../Components/EditPostForm/EditPostForm";
 
 const formatDate = (dateString) => {
   const options = { day: "2-digit", month: "long", year: "numeric" };
   return new Date(dateString).toLocaleDateString("en-GB", options);
-};
-
-const getCategoryColor = (category) => {
-  const foundCategory = categories.find((cat) => cat.name === category);
-  return foundCategory ? foundCategory.color : "bg-gray-400"; // Default color
 };
 
 const PostWithoutImage = ({ post }) => {
@@ -61,36 +56,44 @@ const PostWithoutImage = ({ post }) => {
         />
       )}
       <Link to={`/post/${post._id}`}>
-        <div className="bg-white overflow-hidden hover:shadow-lg transition border flex flex-col mb-2 md:max-w-md mx-auto p-4 relative">
-        
-        {/* Title */}
-        <h3 className="text-lg font-bold text-gray-900 mb-1">{post.title}</h3>
+      <div className="bg-[var(--bg-light)] dark:bg-[var(--bg-dark)] 
+                text-[var(--text-dark)] dark:text-[var(--text-light)] 
+                border border-[var(--border-light)] dark:border-[var(--border-dark)]
+                shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300 transform 
+                hover:-translate-y-1 hover:scale-[1.02] flex flex-col w-full md:max-w-md mx-auto mb-1 
+                p-4 relative rounded">
 
-        {/* Description (2 lines) */}
-        <p
-          className="text-gray-700 text-xs sm:text-sm line-clamp-2 flex-grow mb-3"
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(post.description?.slice(0, 100) + "..."),
-          }}
-        />
 
-        {/* Date & Post Owner */}
-        <div className="text-gray-600 text-xs sm:text-sm mt-auto flex justify-between">
-          <p>
-            <span>{formatDate(post.createdAt)}</span>
-            <span> | </span>
-            <span>By: {post.user?.name || "Anonymous"}</span>
-          </p>
-        </div>
 
-        {/* Category in Bottom Right Corner */}
-        <span
-          className={`absolute bottom-2 right-2 px-2 py-1 text-xs text-white font-semibold rounded-sm ${getCategoryColor(category)}`}
-        >
-          {category}
-        </span>
-      </div>
-    </Link>
+    {/* Title */}
+    <h3 className="text-lg font-bold mb-1 text-[var(--text-dark)] dark:text-[var(--text-light)]">{post.title}</h3>
+
+    {/* Description */}
+    <p
+      className="text-xs sm:text-sm line-clamp-2 flex-grow mb-3 text-[var(--text-dark)] dark:text-[var(--text-light)]"
+      dangerouslySetInnerHTML={{
+        __html: DOMPurify.sanitize(post.description?.slice(0, 100) + "..."),
+      }}
+    />
+
+    {/* Date & Author */}
+    <div className="text-xs sm:text-sm mt-auto flex justify-between text-[var(--text-secondary)] dark:text-[var(--text-secondary-dark)]">
+      <p>
+        <span>{formatDate(post.createdAt)}</span>
+        <span> | </span>
+        <span>By: <Link to={`/profile/${post.user?._id}`} className="hover:underline">{post.user?.name || "Anonymous"}</Link></span>
+      </p>
+    </div>
+
+    {/* Category Tag */}
+    <span
+      className={`absolute bottom-2 right-2 px-2 py-1 text-xs font-semibold rounded-sm ${getCategoryColor(category).full}`}
+    >
+      {category}
+    </span>
+  </div>
+</Link>
+
     </>
   );
 };

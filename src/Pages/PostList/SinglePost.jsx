@@ -88,26 +88,14 @@ const SinglePost = () => {
             isOwner={isOwner} 
             onDelete={handleDelete}
             onEditSubmit={handleEditSubmit}
-            className="bg-[var(--bg-light)] text-[var(--text-dark)]"
           />
-          <RightPost 
-            relatedPosts={relatedPosts.filter(p => p.images?.length)} 
-            className="bg-[var(--bg-light)] text-[var(--text-dark)]"
-          />
-          <LeftPost 
-            relatedPosts={userPosts} 
-            username={post.user?.name || ""} 
-            className="bg-[var(--bg-light)] text-[var(--text-dark)]"
-          />
+          <RightPost relatedPosts={relatedPosts.filter(p => p.images?.length)} />
+          <LeftPost relatedPosts={userPosts} username={post.user?.name || ""} />
         </div>
 
         {/* Tablet & Desktop: Grid Layout */}
         <div className="hidden md:col-span-3 md:block">
-          <LeftPost 
-            relatedPosts={userPosts} 
-            username={post.user?.name || ""} 
-            className="bg-[var(--bg-light)] text-[var(--text-dark)]"
-          />
+          <LeftPost relatedPosts={userPosts} username={post.user?.name || ""} />
         </div>
 
         <div className="hidden md:col-span-6 md:block">
@@ -116,15 +104,11 @@ const SinglePost = () => {
             isOwner={isOwner} 
             onDelete={handleDelete}
             onEditSubmit={handleEditSubmit}
-            className="bg-[var(--bg-light)] text-[var(--text-dark)]"
           />
         </div>
 
         <div className="hidden md:col-span-3 md:block">
-          <RightPost 
-            relatedPosts={relatedPosts.filter(p => p.images?.length)} 
-            className="bg-[var(--bg-light)] text-[var(--text-dark)]"
-          />
+          <RightPost relatedPosts={relatedPosts.filter(p => p.images?.length)} />
         </div>
       </div>
     </div>

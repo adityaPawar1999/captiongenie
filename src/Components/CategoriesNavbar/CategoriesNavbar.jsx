@@ -1,35 +1,34 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { categories } from "../../categories";
+import { categories, getCategoryColor } from "../../categories";
 import { fetchPosts, setSelectedCategory } from "../../Redux/postSlice";
 
 const CategoriesNavbar = () => {
   const dispatch = useDispatch();
   const selectedCategory = useSelector((state) => state.posts.selectedCategory) || "All";
 
-  const getCategoryColor = (category) => {
-    const foundCategory = categories.find((cat) => cat.name === category);
-    return foundCategory ? foundCategory.color : "bg-gray-400"; // Default color
-  };
-
   const handleCategoryClick = (category) => {
-    console.log("Category clicked:", category); // ✅ Debug log
     dispatch(setSelectedCategory(category));
-    dispatch(fetchPosts(category === "All" ? "" : category)); // ✅ Ensure correct API call
+    dispatch(fetchPosts(category === "All" ? "" : category));
   };
 
   return (
-    <nav className="flex space-x-1 p-4  overflow-x-auto">
-      {["All", ...categories.map((cat) => cat.name)].map((category) => (
-        <button
-          key={category}
-          onClick={() => handleCategoryClick(category)}
-          className={`px-4 py-2 rounded-sm text-sm font-medium transition-colors 
-            ${selectedCategory === category ? `${getCategoryColor(category)} text-white` : "bg-white text-gray-700 hover:bg-gray-200"}`}
-        >
-          {category}
-        </button>
-      ))}
+    <nav className="flex space-x-2 p-4 overflow-x-auto scrollbar-hide">
+      {["All", ...categories.map((cat) => cat.name)].map((category) => {
+        const isSelected = selectedCategory === category;
+        const { base, hover } = getCategoryColor(category);
+
+        return (
+          <button
+            key={category}
+            onClick={() => handleCategoryClick(category)}
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 
+              ${isSelected ? `${base} text-white` : `bg-gray-200 text-gray-700 ${hover} hover:text-white`}`}
+          >
+            {category}
+          </button>
+        );
+      })}
     </nav>
   );
 };

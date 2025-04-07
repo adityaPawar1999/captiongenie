@@ -50,6 +50,7 @@ const App = () => {
         <Route path="/signin" element={user ? <Navigate to="/profile" /> : <SigninPage />} />
         <Route path="/login" element={user ? <Navigate to="/profile" /> : <LoginPage />} />
         <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/login" />} />
+        <Route path="/profile/:id" element={user ? <ProfilePage /> : <Navigate to="/login" />} />
         <Route path="/post/:id" element={<SinglePost />} />
       </Routes>
     </div>

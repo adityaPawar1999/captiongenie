@@ -15,7 +15,7 @@ const PostList = () => {
     dispatch(fetchPosts(selectedCategory));
   }, [dispatch, selectedCategory]);
 
-  const [visiblePostsCount, setVisiblePostsCount] = useState(8);
+  const [visiblePostsCount, setVisiblePostsCount] = useState(4);
   const postsWithImages = posts.filter((post) => post.images?.length > 0);
   const postsWithoutImages = posts.filter((post) => !post.images?.length);
   const visiblePosts = [...postsWithImages].reverse().slice(0, visiblePostsCount);
@@ -42,7 +42,7 @@ const PostList = () => {
             {postsWithImages.length > visiblePostsCount && (
               <div className="col-span-full flex justify-center mt-4">
                 <button 
-                  onClick={() => setVisiblePostsCount(visiblePostsCount + 6)}
+                  onClick={() => setVisiblePostsCount(visiblePostsCount + 4)}
                   className="bg-[var(--primary-color)] text-[var(--always-white)] px-4 py-2 rounded hover:bg-[var(--secondary-color)]"
                 >
                   See More

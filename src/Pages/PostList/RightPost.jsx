@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { getCategoryColor } from "../../categories"; // Adjust path if needed
@@ -6,7 +6,7 @@ import { getCategoryColor } from "../../categories"; // Adjust path if needed
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const RightPost = ({ relatedPosts }) => {
-  const [visiblePostsCount, setVisiblePostsCount] = useState(6);
+  const [visiblePostsCount, setVisiblePostsCount] = useState(4);
   const visiblePosts = relatedPosts.slice(0, visiblePostsCount);
 
   return (
@@ -15,7 +15,8 @@ const RightPost = ({ relatedPosts }) => {
         <>
           {visiblePosts.map((post) => (
             <Link key={post._id} to={`/post/${post._id}`} className="block mb-4">
-              <div className="bg-white shadow rounded overflow-hidden">
+              
+              <div className="bg-[var(--bg-light)] text-[var(--text-dark)] shadow rounded overflow-hidden">
                 {post.images?.length > 0 && (
                   <img
                     src={`${BACKEND_URL}/images/${post.images[0].replace("uploads/", "")}`}
@@ -35,7 +36,7 @@ const RightPost = ({ relatedPosts }) => {
                   )}
                   <h4 className="font-semibold text-sm mt-1">{post.title}</h4>
                   <div
-                    className="text-xs text-gray-600 line-clamp-2"
+                    className="text-xs line-clamp-2 text-[var(--text-dark)] pt-2"
                     dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.description) }}
                   />
                 </div>

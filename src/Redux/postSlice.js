@@ -71,17 +71,23 @@ export const editPost = createAsyncThunk(
 // Fetch All Posts or By Category
 export const fetchPosts = createAsyncThunk(
     "posts/fetchPosts",
-    async (category = "All", { rejectWithValue }) => {
+    async (params = {}, { rejectWithValue }) => {
       try {
+        const { category = "All", userId } = params;
         const token = getAuthToken();
-        const url =
-          category === "All"
-            ? API_CONFIG.POSTS_URL
-            : `${API_CONFIG.POSTS_URL}?category=${encodeURIComponent(category)}`;
+        
+        // Build URL with query parameters
+        const url = new URL(API_CONFIG.POSTS_URL);
+        if (category !== "All") {
+          url.searchParams.append("category", encodeURIComponent(category));
+        }
+        if (userId) {
+          url.searchParams.append("userId", encodeURIComponent(userId));
+        }
   
-        console.log("Fetching posts from URL:", url); // ✅ Debug log
+        console.log("Fetching posts from URL:", url.toString()); // ✅ Debug log
   
-        const response = await fetch(url, {
+        const response = await fetch(url.toString(), {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -96,7 +102,14 @@ export const fetchPosts = createAsyncThunk(
         }
   
         const fetchedData = await response.json();
-        return fetchedData.data || fetchedData; // ✅ Ensure correct response format
+        const posts = fetchedData.data || fetchedData;
+        
+        // If userId was provided, filter posts by that user
+        if (userId) {
+          return posts.filter(post => post.user?._id === userId);
+        }
+        
+        return posts; // ✅ Ensure correct response format
       } catch (error) {
         return rejectWithValue(error.message || "Network error while fetching posts");
       }

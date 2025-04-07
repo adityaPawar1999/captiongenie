@@ -6,7 +6,7 @@ import { getCategoryColor } from "../../categories"; // ✅ Import utility from 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const LeftPost = ({ relatedPosts, username }) => {
-  const [visiblePostsCount, setVisiblePostsCount] = useState(6);
+  const [visiblePostsCount, setVisiblePostsCount] = useState(4);
   const filteredPosts = username
     ? relatedPosts.filter((post) => post.user?.name === username)
     : relatedPosts;
@@ -22,7 +22,7 @@ const LeftPost = ({ relatedPosts, username }) => {
         <>
           {visiblePosts.map((post) => (
             <Link key={post._id} to={`/post/${post._id}`} className="block mb-4">
-              <div className="bg-white shadow rounded overflow-hidden">
+              <div className="bg-[var(--bg-light)] text-[var(--text-dark)] shadow rounded overflow-hidden">
                 {post.images?.length > 0 && (
                   <img
                     src={`${BACKEND_URL}/images/${post.images[0].replace("uploads/", "")}`}
@@ -39,7 +39,7 @@ const LeftPost = ({ relatedPosts, username }) => {
                   )}
                   <h4 className="font-semibold text-sm mt-1 line-clamp-2">{post.title}</h4>
                   <div
-                    className="text-xs text-gray-600 line-clamp-2"
+                    className="text-xs text-[var(--text-dark)]  line-clamp-2"
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(post.description),
                     }}

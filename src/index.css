@@ -4,43 +4,48 @@
 @tailwind utilities;
 
 :root {
-    --text-dark: #121212;  /* Default text */
-    --text-light: #fff;       /* Light mode text */
+    /* Light Theme Colors */
+    --text-primary: #121212;
+    --text-secondary: #4b5563;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f3f4f6;
+    --border-primary: #e5e7eb;
     
-    --bg-light: #fff;        /* Light mode background */
-    --bg-dark: #121212;      /* Dark mode background */
-     
-    /* 🎯 Permanent Colors */
-    --always-black: #000000;  
+    /* Accent Colors */
+    --primary-color: #22c55e;
+    --primary-hover: #16a34a;
+    --secondary-color: #2563eb;
+    --secondary-hover: #1e40af;
+    --danger-color: #ef4444;
+    
+    /* Permanent Colors */
+    --always-black: #000000;
     --always-white: #ffffff;
-
-    --link-btn-1: #E63946;
-    
-    --primary-color: #22c55e;  /* Green */
-    --secondary-color: #2563eb; /* Blue */  
-}
-
-.link-btn {
-  background: #d52534;
-  padding: 2px 6px;
-  color: #fff;
-  border-radius: 10px;
-  font-size: 10px;
 }
 
 html.dark {
-    --text-light: #121212;
-    --text-dark: #fff;
-
-    --bg-light: #121212;
-    --bg-dark: #fff;
-
+    /* Dark Theme Colors */
+    --text-primary: #ffffff;
+    --text-secondary: #d1d5db;
+    --bg-primary: #121212;
+    --bg-secondary: #1f2937;
+    --border-primary: #374151;
     
-    --always-black: #000000;  
+    /* Accent Colors */
+    --primary-color: #16a34a;
+    --primary-hover: #15803d;
+    --secondary-color: #1e40af;
+    --secondary-hover: #1e3a8a;
+    --danger-color: #dc2626;
+    
+    /* Permanent Colors remain unchanged */
+    --always-black: #000000;
     --always-white: #ffffff;
+}
 
-    --primary-color: #16a34a;  /* Dark Green */
-    --secondary-color: #1e40af; /* Dark Blue */
-
-    /* Permanent colors remain unchanged */
+/* Global Styles */
+body {
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    transition: color 0.3s, background-color 0.3s;
 }
