@@ -23,14 +23,14 @@ const PostList = () => {
   if (status === "failed") return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
-    <div className="max-w-7xl mx-auto p-4">
+    <div className="max-w-7xl mx-auto p-4 bg-[var(--bg-light)] text-[var(--text-dark)]">
       <CategoriesNavbar />
       <h2 className="text-3xl font-bold text-center mb-6">
         {selectedCategory === "All" ? "All Posts" : `${selectedCategory} Posts`}
       </h2>
 
       {posts.length === 0 ? (
-        <p className="text-center text-gray-500">No posts available</p>
+        <p className="text-center text-[var(--text-dark)]">No posts available</p>
       ) : (
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Left Side - Posts With Images (2 columns) */}
@@ -42,7 +42,7 @@ const PostList = () => {
               <div className="col-span-full flex justify-center mt-4">
                 <button 
                   onClick={() => setVisiblePostsCount(visiblePostsCount + 6)}
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  className="bg-[var(--primary-color)] text-[var(--always-white)] px-4 py-2 rounded hover:bg-[var(--secondary-color)]"
                 >
                   See More
                 </button>

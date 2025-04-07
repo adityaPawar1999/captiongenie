@@ -46,17 +46,17 @@ const ProfilePage = () => {
   const postsWithoutImages = userPosts.filter((post) => !post.images?.length);
 
   return (
-    <div className="min-h-screen bg-white text-[var(--text-color-1)] p-6">
+    <div className="min-h-screen bg-[var(--bg-light)] text-[var(--text-dark)] p-6 dark:bg-[var(--bg-dark)] dark:text-[var(--text-light)]">
       <div className="max-w-7xl mx-auto">
         {/* Profile Information */}
-        <div className="bg-white shadow-md rounded-lg p-6 mb-8">
+        <div className="bg-[var(--bg-light)] shadow-md rounded-lg p-6 mb-8 dark:bg-[var(--bg-dark)]">
           <h2 className="text-2xl font-bold mb-4">Profile</h2>
           <p className="text-lg mb-2">Name: {userData?.name}</p>
           <p className="text-lg mb-2">ID: {userData?.id}</p>
           <p className="text-lg mb-4">Email: {userData?.email}</p>
           <button
             onClick={handleLogout}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+            className="bg-[var(--primary-color)] text-[var(--always-white)] px-4 py-2 rounded hover:bg-[var(--secondary-color)] transition"
           >
             Logout
           </button>
@@ -72,7 +72,7 @@ const ProfilePage = () => {
           {error && <p className="text-center text-red-500">Error: {error}</p>}
 
           {userPosts.length === 0 ? (
-            <p className="text-center text-gray-500">You haven't created any posts yet.</p>
+            <p className="text-center text-[var(--text-muted)]">You haven't created any posts yet.</p>
           ) : (
             <div className="grid lg:grid-cols-3 gap-6">
               {/* Posts with Images (2 columns) */}

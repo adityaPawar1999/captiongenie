@@ -95,8 +95,8 @@ const AddPost = () => {
 };
  ////////////////////////////////////
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white p-5">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-2xl">
+    <div className="flex justify-center items-center min-h-screen bg-[var(--bg-light)] p-5 dark:bg-[var(--bg-dark)]">
+      <div className="bg-[var(--bg-light)] shadow-lg rounded-lg p-6 w-full max-w-2xl dark:bg-[var(--bg-dark)]">
         <h2 className="text-2xl font-bold text-center mb-4">Add New Post</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">

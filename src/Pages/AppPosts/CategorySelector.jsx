@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { getCategoryColor } from '../../categories';
 
 const CategorySelector = ({ selectedCategories, setPost }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -31,7 +32,7 @@ const CategorySelector = ({ selectedCategories, setPost }) => {
               {categories.map((category) => (
                 <label
                   key={category}
-                  className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
+                  className={`flex items-center p-2 hover:${getCategoryColor(category).split(' ')[0]}-200 cursor-pointer`}
                 >
                   <input
                     type="checkbox"

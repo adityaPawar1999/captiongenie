@@ -78,7 +78,7 @@ const SinglePost = () => {
   if (!post) return <p className="text-center">Post not found</p>;
 
   return (
-    <div className="container mx-auto p-5">
+    <div className="container mx-auto p-5 bg-[var(--bg-light)] text-[var(--text-dark)]">
       {/* Unified Grid Layout for all devices */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
         {/* Mobile: Stacked (full width) */}
@@ -88,14 +88,26 @@ const SinglePost = () => {
             isOwner={isOwner} 
             onDelete={handleDelete}
             onEditSubmit={handleEditSubmit}
+            className="bg-[var(--bg-light)] text-[var(--text-dark)]"
           />
-          <RightPost relatedPosts={relatedPosts.filter(p => p.images?.length)} />
-          <LeftPost relatedPosts={userPosts} username={post.user?.name || ""} />
+          <RightPost 
+            relatedPosts={relatedPosts.filter(p => p.images?.length)} 
+            className="bg-[var(--bg-light)] text-[var(--text-dark)]"
+          />
+          <LeftPost 
+            relatedPosts={userPosts} 
+            username={post.user?.name || ""} 
+            className="bg-[var(--bg-light)] text-[var(--text-dark)]"
+          />
         </div>
 
         {/* Tablet & Desktop: Grid Layout */}
         <div className="hidden md:col-span-3 md:block">
-          <LeftPost relatedPosts={userPosts} username={post.user?.name || ""} />
+          <LeftPost 
+            relatedPosts={userPosts} 
+            username={post.user?.name || ""} 
+            className="bg-[var(--bg-light)] text-[var(--text-dark)]"
+          />
         </div>
 
         <div className="hidden md:col-span-6 md:block">
@@ -104,11 +116,15 @@ const SinglePost = () => {
             isOwner={isOwner} 
             onDelete={handleDelete}
             onEditSubmit={handleEditSubmit}
+            className="bg-[var(--bg-light)] text-[var(--text-dark)]"
           />
         </div>
 
         <div className="hidden md:col-span-3 md:block">
-          <RightPost relatedPosts={relatedPosts.filter(p => p.images?.length)} />
+          <RightPost 
+            relatedPosts={relatedPosts.filter(p => p.images?.length)} 
+            className="bg-[var(--bg-light)] text-[var(--text-dark)]"
+          />
         </div>
       </div>
     </div>

@@ -4,6 +4,12 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+}
+
+.read-the-docs {
+  color: var(--text-dark);
 }
 
 .logo {

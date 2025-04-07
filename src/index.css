@@ -35,6 +35,10 @@ html.dark {
     --bg-light: #121212;
     --bg-dark: #fff;
 
+    
+    --always-black: #000000;  
+    --always-white: #ffffff;
+
     --primary-color: #16a34a;  /* Dark Green */
     --secondary-color: #1e40af; /* Dark Blue */
 
