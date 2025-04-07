@@ -42,7 +42,7 @@ npm run build
 ## Environment Variables
 Create a `.env` file and add:
 ```
-VITE_BACKEND_URL=http://localhost:5003
+VITE_BACKEND_URL=https://believable-truth-production-58ad.up.railway.app
 ```
 
 ## API Routes
