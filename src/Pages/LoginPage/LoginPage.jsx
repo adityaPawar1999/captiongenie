@@ -25,7 +25,7 @@ const LoginPage = () => {
     }
   
     try {
-      const result = await dispatch(login({ email, password, backendUrl }));
+      const result = await dispatch(login({ email, password }));
     
       if (login.fulfilled.match(result)) {
         const token = result.payload?.token; // ✅ Ensure token comes from API
