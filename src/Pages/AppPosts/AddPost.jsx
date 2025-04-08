@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { submitPostAsync } from "./../../Redux/postSlice";
+import { useNavigate } from "react-router-dom";
+import usePostForm from "./usePostForm";
 import DOMPurify from 'dompurify';
 
 
@@ -11,89 +10,15 @@ import RichTextEditor from "./RichTextEditor";
 
 
 const AddPost = () => {
-
-  const categoryList = [
-    "Technology", "Lifestyle", "Travel", "Food", "Health", 
-    "Business", "Education", "Entertainment", "Science", "Sports"
-  ];
-
-  const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.posts);
-
-  const [post, setPost] = useState({
-    title: "",
-    categories: [],
-    description: "",
-    images: [],
-    links: [{ type: "Website", url: "" }],
-    tags: [],
-  });
-  const [errors, setErrors] = useState({ title: '', description: '', categories: '' });
-
+  // Use the custom hook for form handling and submission
+  const { post, setPost, errors, handleSubmit, loading } = usePostForm();
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPost((prev) => ({ ...prev, [name]: value }));
   };
 
- //////////////////////////////////////
- const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  // Validation checks
-  const newErrors = {};
-  
-  if (!post.title.trim()) {
-    newErrors.title = 'Title is required';
-  }
-
-  const sanitized = DOMPurify.sanitize(post.description);
-  const textContent = new DOMParser().parseFromString(sanitized, 'text/html').body.textContent;
-  const wordCount = textContent.trim().split(/\s+/).length;
-  if (wordCount < 100) {
-    newErrors.description = 'Description must be at least 100 words';
-  }
-
-  if (post.categories.length < 1) {
-    newErrors.categories = 'At least 1 category required';
-  } else if (post.categories.length > 3) {
-    newErrors.categories = 'Maximum 3 categories allowed';
-  }
-
-  if (Object.keys(newErrors).length > 0) {
-    setErrors(newErrors);
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("title", post.title);
-  formData.append("description", post.description);
-  formData.append("categories", JSON.stringify(post.categories));
-  formData.append("links", JSON.stringify(post.links));
-  formData.append("tags", JSON.stringify(post.tags));
-
-  // Append actual image files, not the preview objects
-  post.images.forEach((image) => {
-    formData.append("images", image.file);
-  });
-
-  try {
-    const result = await dispatch(submitPostAsync(formData)).unwrap();
-    alert("Post submitted successfully!");
-    // Reset form
-    setPost({
-      title: "",
-      categories: [],
-      description: "",
-      images: [],
-      links: [{ type: "Website", url: "" }],
-      tags: [],
-    });
-  } catch (error) {
-    console.error("Error submitting post:", error);
-    alert(error.toString() || "Failed to submit post. Please try again later.");
-  }
-};
- ////////////////////////////////////
+  // The handleSubmit function is now provided by the usePostForm hook
   return (
     <div className="flex justify-center items-center min-h-screen bg-[var(--bg-light)] p-5 dark:bg-[var(--bg-dark)]">
       <div className="bg-[var(--bg-light)] shadow-lg rounded-lg p-6 w-full max-w-2xl dark:bg-[var(--bg-dark)]">

@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DOMPurify from 'dompurify';
 import { submitPostAsync } from './../../Redux/postSlice';
+import { useNavigate } from 'react-router-dom';
+
 
 const usePostForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { loading } = useSelector((state) => state.posts);
 
   const [post, setPost] = useState({
@@ -58,7 +61,7 @@ const usePostForm = () => {
     });
 
     try {
-      await dispatch(submitPostAsync(formData)).unwrap();
+      const result = await dispatch(submitPostAsync(formData)).unwrap();
       setPost({
         title: "",
         categories: [],
@@ -67,12 +70,13 @@ const usePostForm = () => {
         links: [{ type: "Website", url: "" }],
         tags: [],
       });
+      navigate('/');
     } catch (error) {
       console.error("Error submitting post:", error);
     }
   };
 
-  return { post, setPost, errors, handleSubmit };
+  return { post, setPost, errors, handleSubmit, loading };
 };
 
 export default usePostForm;

@@ -9,7 +9,7 @@ const CategoriesNavbar = () => {
 
   const handleCategoryClick = (category) => {
     dispatch(setSelectedCategory(category));
-    dispatch(fetchPosts(category === "All" ? "" : category));
+    dispatch(fetchPosts({ category: category === "All" ? "" : category }));
   };
 
   return (

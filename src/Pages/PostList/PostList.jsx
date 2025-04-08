@@ -12,7 +12,7 @@ const PostList = () => {
   const { posts, status, error, selectedCategory } = useSelector((state) => state.posts);
 
   useEffect(() => {
-    dispatch(fetchPosts(selectedCategory));
+    dispatch(fetchPosts({ category: selectedCategory }));
   }, [dispatch, selectedCategory]);
 
   const [visiblePostsCount, setVisiblePostsCount] = useState(4);
